@@ -14,7 +14,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="MAIN.css">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -50,9 +50,8 @@
         </div>
       </div>
 
-      <!-- Right Controls: Theme Toggle + Pitch Guide + Download -->
+      <!-- Right Controls -->
       <div class="flex items-center gap-2.5">
-        <!-- Light / Dark Mode Toggle Button -->
         <button onclick="toggleDarkMode()" id="theme-toggle-btn" class="p-2.5 rounded-xl border transition shadow-sm" title="Toggle Light/Dark Mode">
           <span id="theme-icon">🌙</span>
         </button>
@@ -173,22 +172,22 @@
             <h2 class="text-base font-bold">What Is Your Main Goal?</h2>
           </div>
           <div class="grid grid-cols-2 gap-2.5">
-            <button onclick="selectGoalPreset('balanced')" id="goal-card-balanced" class="goal-card p-3.5 rounded-2xl border-2 text-left transition">
+            <button onclick="selectGoalPreset('balanced')" id="goal-card-balanced" class="goal-card p-3.5 rounded-2xl border-2 text-left transition app-border border-yellow-400 shadow-lg shadow-yellow-500/20">
               <div class="text-xl mb-1">⚖️</div>
               <div class="text-xs font-bold">Balanced</div>
               <div class="text-[11px] opacity-75">Steady yield + soil care</div>
             </button>
-            <button onclick="selectGoalPreset('water')" id="goal-card-water" class="goal-card p-3.5 rounded-2xl border-2 text-left transition">
+            <button onclick="selectGoalPreset('water')" id="goal-card-water" class="goal-card p-3.5 rounded-2xl border-2 text-left transition app-border">
               <div class="text-xl mb-1">💧</div>
               <div class="text-xs font-bold">Save Water</div>
               <div class="text-[11px] opacity-75">For dry spells</div>
             </button>
-            <button onclick="selectGoalPreset('soil')" id="goal-card-soil" class="goal-card p-3.5 rounded-2xl border-2 text-left transition">
+            <button onclick="selectGoalPreset('soil')" id="goal-card-soil" class="goal-card p-3.5 rounded-2xl border-2 text-left transition app-border">
               <div class="text-xl mb-1">🌱</div>
               <div class="text-xs font-bold">Heal Soil</div>
               <div class="text-[11px] opacity-75">Boost nitrogen</div>
             </button>
-            <button onclick="selectGoalPreset('yield')" id="goal-card-yield" class="goal-card p-3.5 rounded-2xl border-2 text-left transition">
+            <button onclick="selectGoalPreset('yield')" id="goal-card-yield" class="goal-card p-3.5 rounded-2xl border-2 text-left transition app-border">
               <div class="text-xl mb-1">🌾</div>
               <div class="text-xs font-bold">Max Harvest</div>
               <div class="text-[11px] opacity-75">Market cash crops</div>
@@ -301,6 +300,6 @@
     </div>
   </main>
 
-  <script src="app.js"></script>
+  <script src="MAIN.js"></script>
 </body>
 </html>

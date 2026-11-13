@@ -257,31 +257,59 @@ function getProjectedConditions() {
   };
 }
 
+// --- Dynamic Adaptive Rotation Scoring Engine ---
+function computeAdaptiveRotation() {
+  const p = state.priorities;
+  const scored = CROPS.map(crop => {
+    const totalW = Math.max(1, p.water + p.soil + p.yield);
+    let score = (crop.waterScore * p.water) / totalW +
+                (crop.soilFixScore * p.soil) / totalW +
+                (crop.yieldScore * p.yield) / totalW;
+    return { crop, score };
+  });
+
+  scored.sort((a, b) => b.score - a.score);
+
+  return {
+    resilienceScore: Math.round(85 + (state.currentData.rainAnomalyPct < -30 ? 2 : 6)),
+    seasons: [
+      { timing: 'Season 1 (Early Rains)', crop: scored[0].crop, rationale: 'Optimized for your primary goal and soil restoration.' },
+      { timing: 'Season 2 (Main Window)', crop: scored[1].crop, rationale: 'Balanced for reliable yield and climate resilience.' },
+      { timing: 'Season 3 (Late Cover)', crop: scored[2].crop, rationale: 'Protects soil carbon and breaks pest cycles.' }
+    ]
+  };
+}
+
 function renderAll() {
   const d = state.currentData;
   const cond = getProjectedConditions();
+  const rotation = computeAdaptiveRotation();
 
   document.getElementById('active-location-title').textContent = d.name;
   document.getElementById('outlook-horizon-label').textContent = cond.horizonName;
   document.getElementById('outlook-prediction-text').textContent = cond.summaryText;
+  document.getElementById('resilience-score-badge').innerHTML = `${rotation.resilienceScore}<span class="text-xs opacity-50">/100</span>`;
 
-  // Render Rotation Plan Cards
+  // Render Dynamic Rotation Plan Cards
   const cardsContainer = document.getElementById('web-rotation-cards');
-  cardsContainer.innerHTML = CROPS.slice(0, 3).map((crop, idx) => `
+  cardsContainer.innerHTML = rotation.seasons.map((item, idx) => `
     <div class="app-surface-card border rounded-2xl p-4 flex flex-col justify-between shadow-sm">
       <div class="space-y-2">
         <div class="flex items-center justify-between">
-          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-600 dark:text-cyan-400">Season ${idx + 1}</span>
-          <span class="text-[11px] opacity-75">${crop.daysToMaturity}</span>
+          <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-600 dark:text-cyan-400">${item.timing}</span>
+          <span class="text-[11px] opacity-75">${item.crop.daysToMaturity}</span>
         </div>
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl app-surface-sub">${crop.icon}</div>
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl app-surface-sub">${item.crop.icon}</div>
           <div>
-            <h3 class="font-bold text-sm">${crop.name}</h3>
-            <span class="text-xs opacity-75">${crop.category}</span>
+            <h3 class="font-bold text-sm">${item.crop.name}</h3>
+            <span class="text-xs opacity-75">${item.crop.category}</span>
           </div>
         </div>
-        <p class="text-xs opacity-90">${crop.benefit}</p>
+        <p class="text-xs opacity-90">${item.crop.benefit}</p>
+        <div class="text-[11px] text-cyan-600 dark:text-cyan-400 pt-1 font-medium border-t app-border mt-2">
+          <strong>Why:</strong> ${item.rationale}
+        </div>
       </div>
     </div>
   `).join('');
@@ -303,6 +331,17 @@ function selectGoalPreset(goal) {
   else if (goal === 'soil') state.priorities = { water: 70, soil: 100, yield: 50 };
   else if (goal === 'yield') state.priorities = { water: 50, soil: 70, yield: 100 };
   else state.priorities = { water: 80, soil: 85, yield: 65 };
+
+  document.querySelectorAll('.goal-card').forEach(card => {
+    card.classList.remove('border-yellow-400', 'shadow-lg', 'shadow-yellow-500/20');
+    card.classList.add('app-border');
+  });
+  const selectedCard = document.getElementById(`goal-card-${goal}`);
+  if (selectedCard) {
+    selectedCard.classList.remove('app-border');
+    selectedCard.classList.add('border-yellow-400', 'shadow-lg', 'shadow-yellow-500/20');
+  }
+
   renderAll();
   showToast(`Applied priority: ${goal}`);
 }
