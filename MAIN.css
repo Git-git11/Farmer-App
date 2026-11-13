@@ -1,56 +1,129 @@
-    body {
-      background: radial-gradient(circle at top right, #0d1626 0%, #07090E 60%);
-      color: #f3f4f6;
-      font-family: 'Inter', sans-serif;
-    }
-    /* Custom subtle scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #07090E;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #334155;
-    }
-    /* Leaflet dark map filter with rich contrast */
-    .leaflet-tile-pane {
-      filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(98%) saturate(110%);
-    }
-    .leaflet-container {
-      background: #0d121c !important;
-      font-family: 'Inter', sans-serif !important;
-    }
-    /* Range slider styling */
-    input[type="range"] {
-      -webkit-appearance: none;
-      appearance: none;
-      background: #1e293b;
-      height: 8px;
-      border-radius: 999px;
-      outline: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: #10b981;
-      cursor: pointer;
-      border: 2px solid #07090E;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
-    }
-    input[type="range"].amber-slider::-webkit-slider-thumb {
-      background: #f59e0b;
-      box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-    }
-    input[type="range"].sky-slider::-webkit-slider-thumb {
-      background: #06b6d4;
-      box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
-    }
+/* Light Mode Variables (Default) */
+:root {
+  --bg-main: #f8fafc;
+  --panel-bg: #ffffff;
+  --surface-bg: #f1f5f9;
+  --surface-sub: #e2e8f0;
+  --border-color: #cbd5e1;
+  --text-main: #0f172a;
+  --banner-bg: #ecfeff;
+  --banner-border: #a5f3fc;
+}
+
+/* Dark Mode Variables */
+html.dark {
+  --bg-main: #07090E;
+  --panel-bg: #101520;
+  --surface-bg: #161E2E;
+  --surface-sub: #0f172a;
+  --border-color: #222F45;
+  --text-main: #f3f4f6;
+  --banner-bg: rgba(6, 182, 212, 0.1);
+  --banner-border: rgba(6, 182, 212, 0.3);
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+#site-header {
+  background-color: var(--panel-bg);
+  border-color: var(--border-color);
+}
+
+.app-card {
+  background-color: var(--panel-bg);
+  border-color: var(--border-color);
+}
+
+.app-surface-card {
+  background-color: var(--surface-bg);
+  border-color: var(--border-color);
+}
+
+.app-surface-btn {
+  background-color: var(--surface-bg);
+  border-color: var(--border-color);
+}
+
+.app-surface-sub {
+  background-color: var(--surface-sub);
+}
+
+.app-border {
+  border-color: var(--border-color);
+}
+
+.app-input {
+  background-color: var(--surface-bg);
+  border-color: var(--border-color);
+  color: var(--text-main);
+}
+
+.app-banner {
+  background-color: var(--banner-bg);
+  border-color: var(--banner-border);
+}
+
+.app-chart-bg {
+  background-color: var(--surface-sub);
+}
+
+.app-step-1 {
+  background: linear-gradient(to right, rgba(6, 182, 212, 0.1), transparent);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+.app-step-2 {
+  background: linear-gradient(to right, rgba(20, 184, 166, 0.1), transparent);
+  border-color: rgba(20, 184, 166, 0.3);
+}
+.app-step-3 {
+  background: linear-gradient(to right, rgba(249, 115, 22, 0.1), transparent);
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+
+/* Leaflet Map Adaptation */
+.leaflet-container {
+  background: var(--surface-sub) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+html.dark .leaflet-tile-pane {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(98%) saturate(110%);
+}
+
+/* Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--surface-sub);
+  height: 8px;
+  border-radius: 999px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #06b6d4;
+  cursor: pointer;
+  border: 2px solid var(--panel-bg);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+}
